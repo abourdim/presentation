@@ -16,13 +16,22 @@ body{background:#F4F0E8;overflow:hidden;font-family:'Rajdhani',sans-serif;color:
 #title .bar{width:0;height:2px;margin:12px auto;background:linear-gradient(90deg,transparent,#B84400,#D46000,#B84400,transparent);animation:expand 1.5s 1.5s ease forwards;box-shadow:0 0 6px rgba(180,80,0,.3)}
 @keyframes expand{to{width:320px}}
 #title .sub{font-size:clamp(13px,1.6vw,20px);font-weight:400;letter-spacing:0.1em;color:rgba(60,35,10,.52);margin-top:10px}
-#spot{position:absolute;bottom:52px;left:50%;transform:translateX(-50%) translateY(16px);background:rgba(255,252,245,.97);border:1px solid rgba(180,80,0,.28);border-radius:14px;padding:18px 28px;max-width:480px;width:88%;text-align:center;opacity:0;transition:all .5s cubic-bezier(.16,1,.3,1);box-shadow:0 6px 40px rgba(160,70,0,.12),0 0 0 1px rgba(180,80,0,.06);backdrop-filter:blur(20px)}
+#spot{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:rgba(255,252,245,.97);border:1px solid rgba(180,80,0,.3);
+  border-radius:20px;padding:28px 40px 24px;max-width:680px;width:92%;
+  opacity:0;transition:all .6s cubic-bezier(.16,1,.3,1);
+  box-shadow:0 8px 60px rgba(160,70,0,.14),0 0 0 1px rgba(180,80,0,.07);
+  backdrop-filter:blur(24px);
+}
 #spot.show{opacity:1;transform:translateX(-50%) translateY(0)}
-#se{font-size:32px;display:block;margin-bottom:6px}
-#sn{font-family:'Orbitron',monospace;font-size:15px;font-weight:700;color:#B84400;letter-spacing:.06em}
-#sd{font-size:13px;color:rgba(50,28,8,.7);margin-top:7px;line-height:1.6;font-weight:400}
-#sc{display:flex;gap:6px;justify-content:center;margin-top:9px;flex-wrap:wrap}
-.ct{padding:2px 9px;border:1px solid rgba(180,80,0,.28);border-radius:20px;font-size:10px;letter-spacing:.1em;color:rgba(160,65,0,.8);text-transform:uppercase}
+#spot-inner{display:flex;align-items:flex-start;gap:24px;text-align:left}
+#se{font-size:52px;flex-shrink:0;line-height:1;margin-top:4px;filter:drop-shadow(0 2px 8px rgba(180,80,0,.2))}
+#spot-body{flex:1;min-width:0}
+#sn{font-family:'Orbitron',monospace;font-size:18px;font-weight:900;color:#B84400;letter-spacing:.05em;line-height:1.1;margin-bottom:10px}
+#sd{font-size:15px;color:rgba(40,22,6,.72);line-height:1.7;font-weight:400;margin-bottom:12px}
+#sc{display:flex;gap:7px;flex-wrap:wrap}
+.ct{padding:4px 12px;border:1px solid rgba(180,80,0,.3);border-radius:20px;font-size:11px;letter-spacing:.1em;color:rgba(150,60,0,.85);text-transform:uppercase;font-weight:600;background:rgba(180,80,0,.06)}
 #ctr{position:absolute;top:22px;left:26px;font-family:'Orbitron',monospace;font-size:10px;letter-spacing:.2em;color:rgba(150,70,0,.55);opacity:0;animation:ap 1s 2s ease forwards}
 #ctr b{color:#B84400;font-size:14px}
 #ln{position:absolute;top:16px;right:22px;display:flex;gap:8px;pointer-events:all;opacity:0;animation:ap 1s 2s ease forwards}
@@ -51,10 +60,14 @@ body{background:#F4F0E8;overflow:hidden;font-family:'Rajdhani',sans-serif;color:
   </div>
   <div id="spot">
     <div id="sp-bar"></div>
-    <span id="se"></span>
-    <div id="sn"></div>
-    <div id="sd"></div>
-    <div id="sc"></div>
+    <div id="spot-inner">
+      <span id="se"></span>
+      <div id="spot-body">
+        <div id="sn"></div>
+        <div id="sd"></div>
+        <div id="sc"></div>
+      </div>
+    </div>
   </div>
   <div id="ft">powered by <a href="https://workshop-diy.org" target="_blank">workshop-diy.org</a></div>
 </div>
@@ -71,25 +84,25 @@ function setLang(l){
 }
 const BASE='https://abourdim.github.io/apps/thumbs/';
 const APPS=[
-  {name:'bit-bot',emoji:'🤖',thumb:'bit-bot.png',cats:['microbit','ai'],desc:{fr:'Robot parlant IA — voix, personnalités, BLE',en:'AI talking robot — voice, micro:bit BLE',ar:'روبوت ذكاء اصطناعي ناطق'}},
-  {name:'face-quest',emoji:'🕵️',thumb:'face-quest.png',cats:['camera','ai'],desc:{fr:'Jeu détection faciale — souriez, clignez !',en:'Face detection game — smile, blink!',ar:'لعبة كشف الوجه'}},
-  {name:'magic-hands',emoji:'🪄',thumb:'magic-hands.png',cats:['camera','ai'],desc:{fr:'Agitez vos mains — effets magiques, néon !',en:'Wave hands — magic effects!',ar:'تأثيرات سحرية بتتبع اليد'}},
-  {name:'teachable-machine',emoji:'🧠',thumb:'teachable-machine.png',cats:['ai','microbit'],desc:{fr:'Entraînez des gestes IA → micro:bit temps réel',en:'Train AI gestures → micro:bit real time',ar:'تدريب إيماءات الذكاء الاصطناعي'}},
-  {name:'bit-playground',emoji:'🕹️',thumb:'bit-playground.png',cats:['microbit'],desc:{fr:'Terrain de jeu ultime micro:bit BLE',en:'Ultimate micro:bit BLE playground',ar:'ملعب micro:bit BLE المطلق'}},
-  {name:'mission-control',emoji:'🛸',thumb:'mission-control.png',cats:['microbit','classroom'],desc:{fr:'Tableau de bord WebRTC + commandes micro:bit',en:'WebRTC dashboard + micro:bit commands',ar:'لوحة تحكم WebRTC'}},
-  {name:'bitmoji-lab',emoji:'🎪',thumb:'bitmoji-lab.png',cats:['microbit'],desc:{fr:'Emojis vers matrices LED NeoPixel',en:'Emojis to NeoPixel LED matrix',ar:'إيموجي إلى مصفوفة LED'}},
-  {name:'ble-logger',emoji:'📶',thumb:'ble-logger.png',cats:['microbit'],desc:{fr:'Journal capteurs Bluetooth micro:bit',en:'Bluetooth sensor logger for micro:bit',ar:'مسجل بلوتوث لـ micro:bit'}},
+  {name:'bit-bot',emoji:'🤖',thumb:'bit-bot.png',cats:['microbit','ai'],desc:{fr:'Compagnon robot parlant alimenté par IA — dialoguez par la voix, choisissez sa personnalité et connectez-le à un micro:bit via Bluetooth.',en:'AI talking robot — voice, micro:bit BLE',ar:'روبوت ذكاء اصطناعي ناطق'}},
+  {name:'face-quest',emoji:'🕵️',thumb:'face-quest.png',cats:['camera','ai'],desc:{fr:'Jeu de détection faciale dans le navigateur — souriez, clignez, tournez la tête pour marquer des points. 100% local, aucune donnée envoyée.',en:'Face detection game — smile, blink!',ar:'لعبة كشف الوجه'}},
+  {name:'magic-hands',emoji:'🪄',thumb:'magic-hands.png',cats:['camera','ai'],desc:{fr:'Agitez vos mains devant la caméra pour déclencher des effets magiques — confettis, traînées lumineuses, lueur néon — propulsé par MediaPipe.',en:'Wave hands — magic effects!',ar:'تأثيرات سحرية بتتبع اليد'}},
+  {name:'teachable-machine',emoji:'🧠',thumb:'teachable-machine.png',cats:['ai','microbit'],desc:{fr:'Entraînez vos propres modèles IA pour reconnaître gestes et sons, puis envoyez les résultats en temps réel vers un micro:bit via Bluetooth.',en:'Train AI gestures → micro:bit real time',ar:'تدريب إيماءات الذكاء الاصطناعي'}},
+  {name:'bit-playground',emoji:'🕹️',thumb:'bit-playground.png',cats:['microbit'],desc:{fr:'Le terrain de jeu ultime pour micro:bit BLE — LEDs, capteurs, servos, jeux et graphiques depuis le navigateur.',en:'Ultimate micro:bit BLE playground',ar:'ملعب micro:bit BLE المطلق'}},
+  {name:'mission-control',emoji:'🛸',thumb:'mission-control.png',cats:['microbit','classroom'],desc:{fr:'Tableau de bord avec vidéo et chat WebRTC — envoyez des commandes à distance vers un micro:bit via Bluetooth.',en:'WebRTC dashboard + micro:bit commands',ar:'لوحة تحكم WebRTC'}},
+  {name:'bitmoji-lab',emoji:'🎪',thumb:'bitmoji-lab.png',cats:['microbit'],desc:{fr:'Choisissez des emojis, peignez-les et envoyez vos créations vers une matrice LED NeoPixel 8x8 ou 16x16 via micro:bit.',en:'Emojis to NeoPixel LED matrix',ar:'إيموجي إلى مصفوفة LED'}},
+  {name:'ble-logger',emoji:'📶',thumb:'ble-logger.png',cats:['microbit'],desc:{fr:'Journal de débogage Bluetooth pour micro:bit — connectez-vous, inspectez les services, lisez les capteurs et logguez en temps réel.',en:'Bluetooth sensor logger for micro:bit',ar:'مسجل بلوتوث لـ micro:bit'}},
   {name:'face-tracking',emoji:'👁️',thumb:'face-tracking.png',cats:['camera','microbit'],desc:{fr:'Suivi de visage → données BLE micro:bit',en:'Face tracking → BLE micro:bit data',ar:'تتبع الوجه مع micro:bit'}},
-  {name:'linux-kids-lab',emoji:'🐧',thumb:'linux-kids-lab.png',cats:['learning'],desc:{fr:'Apprenez Linux dans un bac à sable navigateur',en:'Learn Linux in a safe browser sandbox',ar:'تعلّم لينكس في المتصفح'}},
-  {name:'crypto-academy',emoji:'🪙',thumb:'crypto-academy.png',cats:['learning'],desc:{fr:'Cryptographie interactive — TLS, PKI, hachage',en:'Interactive cryptography — TLS, PKI',ar:'تشفير تفاعلي متكامل'}},
-  {name:'pentest-lab',emoji:'🔐',thumb:'pentest-lab.png',cats:['learning'],desc:{fr:'Cybersécurité — défis guidés, style CTF',en:'Cybersecurity — CTF style',ar:'أمن سيبراني وتحديات CTF'}},
-  {name:'circuit-lab',emoji:'🔋',thumb:'circuit-lab.png',cats:['hardware','learning'],desc:{fr:'Simulez des circuits électroniques',en:'Simulate electronic circuits',ar:'محاكاة الدوائر الإلكترونية'}},
-  {name:'3d-lab',emoji:'🧊',thumb:'3d-lab.png',cats:['learning'],desc:{fr:'Explorez la 3D avec Three.js',en:'Explore 3D with Three.js',ar:'استكشف التصميم ثلاثي الأبعاد'}},
-  {name:'rxy',emoji:'🎮',thumb:'rxy.png',cats:['microbit'],desc:{fr:'Télécommande BLE micro:bit — sans code',en:'BLE remote for micro:bit — no coding',ar:'جهاز تحكم BLE بدون برمجة'}},
-  {name:'arabic-translator',emoji:'🌐',thumb:'arabic-translator.png',cats:['arabic'],desc:{fr:'Traduction arabe 100% locale, hors ligne',en:'Arabic translation 100% local',ar:'ترجمة عربية محلية بدون إنترنت'}},
+  {name:'linux-kids-lab',emoji:'🐧',thumb:'linux-kids-lab.png',cats:['learning'],desc:{fr:'Apprenez Linux dans un bac à sable sécurisé — fichiers, pipes, scripts bash. Devenez un ninja du terminal !',en:'Learn Linux in a safe browser sandbox',ar:'تعلّم لينكس في المتصفح'}},
+  {name:'crypto-academy',emoji:'🪙',thumb:'crypto-academy.png',cats:['learning'],desc:{fr:'Cryptographie interactive — chiffrement, hachage, signatures numériques, PKI et TLS avec de vraies opérations Web Crypto API.',en:'Interactive cryptography — TLS, PKI',ar:'تشفير تفاعلي متكامل'}},
+  {name:'pentest-lab',emoji:'🔐',thumb:'pentest-lab.png',cats:['learning'],desc:{fr:'Bac à sable cybersécurité pour débutants — apprenez les bases à travers des défis guidés et des exercices CTF interactifs.',en:'Cybersecurity — CTF style',ar:'أمن سيبراني وتحديات CTF'}},
+  {name:'circuit-lab',emoji:'🔋',thumb:'circuit-lab.png',cats:['hardware','learning'],desc:{fr:'Construisez et simulez des circuits électroniques — câblez LEDs, résistances et capteurs, visualisez le courant en temps réel.',en:'Simulate electronic circuits',ar:'محاكاة الدوائر الإلكترونية'}},
+  {name:'3d-lab',emoji:'🧊',thumb:'3d-lab.png',cats:['learning'],desc:{fr:'Explorez la conception 3D dans le navigateur — créez, faites pivoter et éclairez des objets interactifs avec Three.js.',en:'Explore 3D with Three.js',ar:'استكشف التصميم ثلاثي الأبعاد'}},
+  {name:'rxy',emoji:'🎮',thumb:'rxy.png',cats:['microbit'],desc:{fr:'Créez une télécommande Bluetooth personnalisée pour micro:bit — glissez des boutons, curseurs et D-pads. Zéro code requis.',en:'BLE remote for micro:bit — no coding',ar:'جهاز تحكم BLE بدون برمجة'}},
+  {name:'arabic-translator',emoji:'🌐',thumb:'arabic-translator.png',cats:['arabic'],desc:{fr:'Traduisez vers et depuis l arabe dans le navigateur — sans serveur, sans clé API, fonctionne entièrement hors ligne.',en:'Arabic translation 100% local',ar:'ترجمة عربية محلية بدون إنترنت'}},
   {name:'piper-arabic-tts',emoji:'🎙️',thumb:'piper-arabic-tts.png',cats:['arabic','ai'],desc:{fr:'Synthèse vocale arabe via WebAssembly',en:'Arabic TTS via WebAssembly',ar:'نص عربي إلى كلام عبر WebAssembly'}},
-  {name:'wled-kids-lab',emoji:'💡',thumb:'wled-kids-lab.png',cats:['hardware'],desc:{fr:'Rubans LED WS2812 avec WLED',en:'WS2812 LED strips with WLED',ar:'شرائط LED مع WLED'}},
-  {name:'esp32-c3-kids-lab',emoji:'⚡',thumb:'esp32-c3-kids-lab.png',cats:['hardware'],desc:{fr:'Labo pratique ESP32-C3 — IoT navigateur',en:'Hands-on ESP32-C3 — browser IoT',ar:'مختبر ESP32-C3 عملي'}},
+  {name:'wled-kids-lab',emoji:'💡',thumb:'wled-kids-lab.png',cats:['hardware'],desc:{fr:'Contrôlez des rubans LED WS2812 / NeoPixel avec WLED — choisissez couleurs, effets et luminosité. Introduction ludique aux LEDs adressables.',en:'WS2812 LED strips with WLED',ar:'شرائط LED مع WLED'}},
+  {name:'esp32-c3-kids-lab',emoji:'⚡',thumb:'esp32-c3-kids-lab.png',cats:['hardware'],desc:{fr:'Labo pratique ESP32-C3 — allumez des LEDs, lisez des capteurs, connectez-vous au WiFi et créez vos premiers projets IoT.',en:'Hands-on ESP32-C3 — browser IoT',ar:'مختبر ESP32-C3 عملي'}},
   {name:'pixel-gateway',emoji:'🟥',thumb:'pixel-gateway.png',cats:['microbit'],desc:{fr:'Emojis colorés → NeoPixel USB & BLE',en:'Colored emojis → NeoPixel USB & BLE',ar:'إيموجي ملون إلى NeoPixel'}},
   {name:'usb-logger',emoji:'🔌',thumb:'usb-logger.png',cats:['microbit'],desc:{fr:'Communication micro:bit via USB WebSerial',en:'micro:bit USB WebSerial',ar:'تواصل micro:bit عبر USB'}},
   {name:'classroom',emoji:'🏫',thumb:'classroom.png',cats:['classroom'],desc:{fr:'Classe virtuelle PeerJS — 12 élèves',en:'PeerJS virtual classroom',ar:'فصل افتراضي PeerJS'}},
