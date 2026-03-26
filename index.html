@@ -167,8 +167,18 @@ body.demo-mode .demo-overlay{display:flex}
 .demo-stage{position:absolute;inset:0;z-index:205;overflow:hidden;background:#0a0a0a}
 
 /* FULL-SCREEN CINEMATIC SLIDE */
-.demo-slide{position:absolute;inset:0;animation:cinema-enter .8s cubic-bezier(.16,1,.3,1) both}
-@keyframes cinema-enter{from{opacity:0;transform:scale(1.02)}to{opacity:1;transform:scale(1)}}
+/* Cinematic slide entrance */
+.demo-slide{position:absolute;inset:0;animation:cinema-enter 1.2s cubic-bezier(.16,1,.3,1) both}
+@keyframes cinema-enter{
+  0%{opacity:0;transform:scale(1.08)}
+  30%{opacity:1}
+  100%{opacity:1;transform:scale(1)}
+}
+/* Staggered children entrance */
+.demo-slide .demo-glass-name{animation:glass-rise .8s cubic-bezier(.16,1,.3,1) .3s both}
+.demo-slide .demo-glass-purpose{animation:glass-rise .8s cubic-bezier(.16,1,.3,1) .5s both}
+.demo-slide .demo-glass-tags{animation:glass-rise .6s cubic-bezier(.16,1,.3,1) .7s both}
+@keyframes glass-rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
 
 /* Full-screen visual */
 .demo-visual{position:absolute;inset:0;overflow:hidden;background:#111;z-index:1}
@@ -177,15 +187,15 @@ body.demo-mode .demo-overlay{display:flex}
 .demo-visual .sim-terminal,.demo-visual .sim-chat,.demo-visual .sim-circuit,.demo-visual .sim-microbit,.demo-visual .sim-book{border-radius:0;height:100%}
 .demo-visual .mini-term,.demo-visual .mini-chat,.demo-visual .mini-mb,.demo-visual .mini-circuit,.demo-visual .mini-book{height:100%;border-radius:0}
 
-/* Glass overlay bar at bottom */
+/* Glass overlay bar at bottom — strong gradient for readability */
 .demo-glass{position:absolute;bottom:0;left:0;right:0;z-index:10;
-  background:linear-gradient(transparent,rgba(0,0,0,.7) 30%,rgba(0,0,0,.85));
-  padding:40px 48px 24px;display:flex;align-items:flex-end;gap:24px}
+  background:linear-gradient(transparent 0%,rgba(0,0,0,.4) 15%,rgba(0,0,0,.85) 40%,rgba(0,0,0,.95) 100%);
+  padding:60px 48px 28px;display:flex;align-items:flex-end;gap:24px}
 .demo-glass-content{flex:1;min-width:0}
-.demo-glass-name{font-family:'Fredoka',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:700;color:white;
-  line-height:1.1;margin-bottom:4px;text-shadow:0 2px 20px rgba(0,0,0,.5)}
-.demo-glass-purpose{font-family:'Fredoka',sans-serif;font-size:clamp(16px,2.5vw,28px);font-weight:500;
-  color:#fbbf24;line-height:1.3;margin-bottom:12px;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+.demo-glass-name{font-family:'Fredoka',sans-serif;font-size:clamp(36px,5vw,64px);font-weight:700;color:white;
+  line-height:1.1;margin-bottom:6px;text-shadow:0 2px 30px rgba(0,0,0,.8),0 0 60px rgba(0,0,0,.4)}
+.demo-glass-purpose{font-family:'Fredoka',sans-serif;font-size:clamp(18px,2.5vw,32px);font-weight:500;
+  color:#fbbf24;line-height:1.3;margin-bottom:14px;text-shadow:0 1px 20px rgba(0,0,0,.8)}
 .demo-glass-tags{display:flex;gap:8px;flex-wrap:wrap}
 .demo-glass-tags .tag{font-size:12px;padding:5px 14px;border-radius:12px;background:rgba(255,255,255,.15);
   color:white;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2)}
