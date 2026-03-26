@@ -289,6 +289,54 @@ body.demo-mode .demo-overlay{display:flex}
 .typewriter{overflow:hidden;border-right:3px solid #fbbf24;white-space:nowrap;animation:tw-blink .8s step-end infinite}
 @keyframes tw-blink{50%{border-color:transparent}}
 
+/* Achievement Badge Popup */
+.demo-achievement{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:300;
+  background:radial-gradient(ellipse,rgba(0,0,0,.95),rgba(0,0,0,.8));border:3px solid #fbbf24;border-radius:24px;
+  padding:32px 48px;text-align:center;transition:.6s cubic-bezier(.34,1.56,.64,1);pointer-events:none}
+.demo-achievement.show{transform:translate(-50%,-50%) scale(1)}
+.demo-achievement .ach-emoji{font-size:64px;animation:cat-emoji-pop .8s cubic-bezier(.34,1.56,.64,1) both}
+.demo-achievement .ach-title{font-family:'Fredoka',sans-serif;font-size:28px;font-weight:700;color:#fbbf24;margin:8px 0 4px}
+.demo-achievement .ach-sub{font-family:'Fredoka',sans-serif;font-size:16px;color:rgba(255,255,255,.7)}
+
+/* Story Mode */
+.demo-story-intro{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+  background:radial-gradient(ellipse,rgba(46,139,87,.15),#0a0a0a 70%);animation:cat-intro-enter 4s ease both}
+.demo-story-intro .st-avatar{font-size:100px;animation:cat-emoji-pop .8s cubic-bezier(.34,1.56,.64,1) .3s both}
+.demo-story-intro .st-name{font-family:'Fredoka',sans-serif;font-size:clamp(36px,6vw,64px);font-weight:700;color:white;
+  animation:cat-title-rise 1s ease .6s both}
+.demo-story-intro .st-sub{font-family:'Fredoka',sans-serif;font-size:clamp(16px,2.5vw,28px);color:rgba(255,255,255,.6);
+  animation:cat-title-rise 1s ease .9s both}
+.demo-story-context{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:12;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(8px);padding:6px 20px;border-radius:20px;
+  font-family:'Fredoka',sans-serif;font-size:14px;color:#fbbf24;white-space:nowrap;direction:ltr;
+  animation:glass-rise .8s ease .2s both;border:1px solid rgba(251,191,36,.2)}
+
+/* Constellation */
+.demo-constellation{position:absolute;inset:0;z-index:20;background:#000;cursor:pointer}
+.demo-constellation canvas{width:100%;height:100%}
+.demo-constellation .const-label{font-family:'Fredoka',sans-serif;font-size:11px;color:rgba(255,255,255,.7);position:absolute;pointer-events:none;text-shadow:0 1px 4px #000}
+.demo-constellation .const-title{position:absolute;top:20px;left:50%;transform:translateX(-50%);font-family:'Fredoka',sans-serif;font-size:24px;color:white;z-index:1}
+.demo-constellation .const-hint{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-family:'Fredoka',sans-serif;font-size:14px;color:rgba(255,255,255,.5);z-index:1}
+
+/* Voice toggle */
+.demo-voice-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:white;font-size:18px;
+  width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.25s}
+.demo-voice-btn.on{background:rgba(251,191,36,.3);border-color:#fbbf24}
+.demo-voice-btn:hover{transform:scale(1.1)}
+
+/* Mirror mode */
+.demo-mirror{position:absolute;inset:0;z-index:0;overflow:hidden}
+.demo-mirror video{width:100%;height:100%;object-fit:cover;opacity:.15;filter:blur(4px) saturate(.5);transform:scaleX(-1)}
+
+/* Time greeting */
+.demo-greeting{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:260;text-align:center;
+  animation:cat-intro-enter 3s ease both}
+.demo-greeting .gr-emoji{font-size:80px;animation:cat-emoji-pop .8s cubic-bezier(.34,1.56,.64,1) .2s both}
+.demo-greeting .gr-text{font-family:'Fredoka',sans-serif;font-size:clamp(24px,4vw,48px);color:white;margin-top:12px;
+  animation:cat-title-rise 1s ease .5s both}
+.demo-greeting .gr-sub{font-family:'Fredoka',sans-serif;font-size:clamp(14px,2vw,24px);color:rgba(255,255,255,.5);
+  animation:cat-title-rise 1s ease .8s both}
+
 /* Fake visual simulations */
 .demo-sim{width:100%;height:100%;display:flex;flex-direction:column;font-family:'Courier New',monospace;overflow:hidden;position:relative}
 
@@ -534,11 +582,14 @@ body.dark ::-webkit-scrollbar-thumb{background:var(--border)}
   <div class="demo-header">
     <div class="demo-title">🛠️ Workshop-DIY</div>
     <div class="demo-counter" id="demoCounter">1 / 97</div>
+    <button class="demo-voice-btn" id="demoVoiceBtn" onclick="toggleVoice()" title="Voice narration">🔇</button>
     <button class="demo-exit" onclick="toggleDemo()">Fermer ✕</button>
   </div>
   <div class="demo-cats" id="demoCats"></div>
+  <div class="demo-mirror" id="demoMirror"></div>
   <div class="demo-particles" id="demoParticles"></div>
   <div class="demo-stage" id="demoStage"></div>
+  <div class="demo-achievement" id="demoAchievement"><div class="ach-emoji" id="achEmoji"></div><div class="ach-title" id="achTitle"></div><div class="ach-sub" id="achSub"></div></div>
   <div class="demo-qr" id="demoQr" title="Scan to browse all apps"><span>workshop-diy.org</span></div>
   <div class="demo-ticker"><div class="demo-ticker-inner" id="demoTicker"></div></div>
   <div class="demo-progress"><div class="demo-progress-bar" id="demoProgress"></div></div>
@@ -1097,10 +1148,13 @@ function toggleDemo(){
     document.getElementById('demoTicker').innerHTML=tkItems.map(t=>`<span>${t}</span><span class="tk-dot">✦</span>`).join('').repeat(3);
     // Spawn particles
     spawnParticles('all');
-    // Cinematic opening
-    showOpening(()=>{
-      showDemoSlide(0);
-      startDemoTimer();
+    demoSeen=0;
+    // Time greeting → Cinematic opening → First slide
+    showTimeGreeting(()=>{
+      showOpening(()=>{
+        showDemoSlide(0);
+        startDemoTimer();
+      });
     });
   } else {
     clearInterval(demoTimer);
@@ -1407,6 +1461,11 @@ function _renderSlide(stage,a,globalIdx,idx){
   }
   // Particles color per category
   spawnParticles(a.cats[0]||'all');
+  // Voice narration
+  const purpose=a.purpose?(a.purpose[LANG]||a.purpose.fr):'';
+  speakText(a.name+'. '+purpose);
+  // Achievement
+  if(!storyMode) checkAchievement();
   document.getElementById('demoCounter').textContent=`${idx+1} / ${demoPlaylist.length}`;
   document.getElementById('demoProgress').style.width=((idx+1)/demoPlaylist.length*100)+'%';
 }
@@ -1462,7 +1521,237 @@ document.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft'){e.preventDefault();demoNav(-1);}
   if(e.key==='p')demoPauseToggle();
   if(e.key==='f'||e.key==='F'){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();}
+  if(e.key==='v'||e.key==='V')toggleVoice();
+  if(e.key==='s'||e.key==='S')startStoryMode();
+  if(e.key==='c'||e.key==='C')showConstellation();
+  if(e.key==='m'||e.key==='M')toggleMirror();
+  if(e.key==='?')showHelp();
 });
+
+// ═══════════════════════════════════════
+//  🗣️ VOICE NARRATION (Web Speech API)
+// ═══════════════════════════════════════
+let voiceOn=false;
+function toggleVoice(){
+  voiceOn=!voiceOn;
+  const btn=document.getElementById('demoVoiceBtn');
+  btn.textContent=voiceOn?'🔊':'🔇';
+  btn.classList.toggle('on',voiceOn);
+  if(!voiceOn) speechSynthesis.cancel();
+}
+function speakText(text){
+  if(!voiceOn||!('speechSynthesis' in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=LANG==='ar'?'ar-SA':LANG==='en'?'en-US':'fr-FR';
+  u.rate=0.9;u.pitch=1.1;
+  speechSynthesis.speak(u);
+}
+
+// ═══════════════════════════════════════
+//  🏆 ACHIEVEMENT BADGES
+// ═══════════════════════════════════════
+let demoSeen=0;
+const ACHIEVEMENTS=[
+  {at:10,emoji:'🌱',title:{fr:'Curieux !',en:'Curious!'},sub:{fr:'10 apps decouvertes',en:'10 apps discovered'}},
+  {at:25,emoji:'🔧',title:{fr:'Maker !',en:'Maker!'},sub:{fr:'25 apps decouvertes',en:'25 apps discovered'}},
+  {at:50,emoji:'🧑‍💻',title:{fr:'Hacker !',en:'Hacker!'},sub:{fr:'50 apps — tu es un pro',en:'50 apps — you are a pro'}},
+  {at:75,emoji:'🚀',title:{fr:'Astronaute !',en:'Astronaut!'},sub:{fr:'75 apps — vers l infini',en:'75 apps — to infinity'}},
+  {at:97,emoji:'🏆',title:{fr:'LEGENDE !',en:'LEGEND!'},sub:{fr:'Toutes les 97 apps !',en:'All 97 apps!'}},
+];
+function checkAchievement(){
+  demoSeen++;
+  const ach=ACHIEVEMENTS.find(a=>a.at===demoSeen);
+  if(!ach)return;
+  const el=document.getElementById('demoAchievement');
+  document.getElementById('achEmoji').textContent=ach.emoji;
+  document.getElementById('achTitle').textContent=ach.title[LANG]||ach.title.fr;
+  document.getElementById('achSub').textContent=ach.sub[LANG]||ach.sub.fr;
+  el.classList.add('show');
+  speakText((ach.title[LANG]||ach.title.fr)+' '+(ach.sub[LANG]||ach.sub.fr));
+  setTimeout(()=>el.classList.remove('show'),3000);
+}
+
+// ═══════════════════════════════════════
+//  📖 STORY MODE — "A Day with Ahmed"
+// ═══════════════════════════════════════
+const STORY_STEPS=[
+  {time:'05:42',emoji:'☀️',context:{fr:'Le reveil — Fajr',en:'Wake up — Fajr'},app:'salat-times'},
+  {time:'07:30',emoji:'📖',context:{fr:'Cours d arabe avant l ecole',en:'Arabic lesson before school'},app:'arabic-speaker'},
+  {time:'09:00',emoji:'🐧',context:{fr:'Atelier informatique a l ecole',en:'Computer class at school'},app:'linux-kids-lab'},
+  {time:'11:00',emoji:'⚡',context:{fr:'TP circuits electroniques',en:'Electronics lab'},app:'circuit-lab'},
+  {time:'14:00',emoji:'🤖',context:{fr:'Projet IA avec le micro:bit',en:'AI project with micro:bit'},app:'bit-bot'},
+  {time:'15:30',emoji:'🔐',context:{fr:'Defi cybersecurite',en:'Cybersecurity challenge'},app:'crypto-academy'},
+  {time:'16:30',emoji:'✈️',context:{fr:'Pause — on regarde les avions',en:'Break — watching planes'},app:'flight-tracker'},
+  {time:'17:00',emoji:'🎮',context:{fr:'Jeu avec la camera !',en:'Camera game time!'},app:'face-quest'},
+  {time:'19:00',emoji:'🌙',context:{fr:'Maghrib — priere du soir',en:'Maghrib — evening prayer'},app:'salat-times'},
+  {time:'20:00',emoji:'📿',context:{fr:'Tesbih avant de dormir',en:'Tasbih before sleep'},app:'tesbih'},
+];
+let storyMode=false,storyIdx=0;
+function startStoryMode(){
+  if(!demoActive)toggleDemo();
+  storyMode=true;storyIdx=0;demoSeen=0;
+  clearTimeout(demoTimer);
+  const stage=document.getElementById('demoStage');
+  const name=LANG==='fr'?'Ahmed, 10 ans':'Ahmed, age 10';
+  const sub=LANG==='fr'?'Maker de Chelles — Une journee type':'Maker from Chelles — A typical day';
+  stage.innerHTML=`<div class="demo-story-intro"><div class="st-avatar">👦🏽</div><div class="st-name">${name}</div><div class="st-sub">${sub}</div></div>`;
+  speakText(name+'. '+sub);
+  setTimeout(()=>showStoryStep(0),4000);
+}
+function showStoryStep(idx){
+  if(idx>=STORY_STEPS.length){storyMode=false;showClosing(()=>{demoIndex=0;showDemoSlide(0);scheduleNextSlide();});return;}
+  storyIdx=idx;
+  const step=STORY_STEPS[idx];
+  const a=APPS.find(x=>x.name===step.app);
+  if(!a){showStoryStep(idx+1);return;}
+  const globalIdx=APPS.indexOf(a);
+  const stage=document.getElementById('demoStage');
+  stage.innerHTML='';
+  const tmp=document.createElement('div');
+  tmp.innerHTML=buildSlideHTML(a,globalIdx);
+  const slide=tmp.firstElementChild;
+  // Add story context bar
+  const ctx=document.createElement('div');
+  ctx.className='demo-story-context';
+  ctx.textContent=`${step.emoji} ${step.time} — ${step.context[LANG]||step.context.fr}`;
+  slide.appendChild(ctx);
+  stage.appendChild(slide);
+  // Typewriter
+  const purposeEl=stage.querySelector('.demo-glass-purpose');
+  if(purposeEl){typewriterEffect(purposeEl,purposeEl.textContent,35);}
+  spawnParticles(a.cats[0]||'all');
+  // Voice
+  const purpose=a.purpose?(a.purpose[LANG]||a.purpose.fr):'';
+  speakText(step.time+'. '+(step.context[LANG]||step.context.fr)+'. '+a.name+'. '+purpose);
+  checkAchievement();
+  document.getElementById('demoCounter').textContent=`${idx+1} / ${STORY_STEPS.length}`;
+  document.getElementById('demoProgress').style.width=((idx+1)/STORY_STEPS.length*100)+'%';
+  demoTimer=setTimeout(()=>showStoryStep(idx+1),8000);
+}
+
+// ═══════════════════════════════════════
+//  🌌 CONSTELLATION MODE
+// ═══════════════════════════════════════
+function showConstellation(){
+  const stage=document.getElementById('demoStage');
+  const W=window.innerWidth,H=window.innerHeight;
+  const CAT_CLR={ai:'#7c3aed',microbit:'#0ea5e9',hardware:'#059669',security:'#ef4444',network:'#3b82f6',arabic:'#d4a03c',learning:'#6366f1',games:'#ec4899',tools:'#6b7280'};
+  // Position apps in a spiral
+  const positions=APPS.map((a,i)=>{
+    const angle=(i/APPS.length)*Math.PI*6;
+    const radius=80+i*3;
+    const x=W/2+Math.cos(angle)*radius*(W/1600);
+    const y=H/2+Math.sin(angle)*radius*(H/900);
+    return {a,x:Math.max(20,Math.min(W-20,x)),y:Math.max(40,Math.min(H-40,y)),color:CAT_CLR[a.cats[0]]||'#888'};
+  });
+  let html=`<div class="demo-constellation" onclick="exitConstellation()">
+    <div class="const-title">${LANG==='fr'?'🌌 La Galaxie Workshop-DIY':'🌌 The Workshop-DIY Galaxy'}</div>
+    <canvas id="constCanvas" width="${W}" height="${H}"></canvas>
+    <div class="const-hint">${LANG==='fr'?'Cliquez pour revenir':'Click to return'}</div>`;
+  // Labels for a subset
+  positions.filter((_,i)=>i%4===0).forEach(p=>{
+    html+=`<div class="const-label" style="left:${p.x+8}px;top:${p.y-6}px">${p.a.emoji} ${p.a.name}</div>`;
+  });
+  html+='</div>';
+  stage.innerHTML=html;
+  // Draw stars and connections
+  const canvas=document.getElementById('constCanvas');
+  const ctx=canvas.getContext('2d');
+  // Connections between same-category apps
+  positions.forEach((p1,i)=>{
+    positions.forEach((p2,j)=>{
+      if(j<=i)return;
+      const shared=p1.a.cats.filter(c=>p2.a.cats.includes(c));
+      if(shared.length>0 && Math.abs(i-j)<8){
+        ctx.beginPath();ctx.moveTo(p1.x,p1.y);ctx.lineTo(p2.x,p2.y);
+        ctx.strokeStyle=p1.color+'15';ctx.lineWidth=0.5;ctx.stroke();
+      }
+    });
+  });
+  // Stars
+  positions.forEach(p=>{
+    const isFeat=FEATURED.includes(p.a.name);
+    const r=isFeat?5:3;
+    ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);
+    ctx.fillStyle=p.color;ctx.fill();
+    if(isFeat){ctx.beginPath();ctx.arc(p.x,p.y,8,0,Math.PI*2);ctx.strokeStyle=p.color+'60';ctx.lineWidth=1;ctx.stroke();}
+  });
+  clearTimeout(demoTimer);
+}
+function exitConstellation(){
+  showDemoSlide(demoIndex);
+  scheduleNextSlide();
+}
+
+// ═══════════════════════════════════════
+//  🪞 MIRROR MODE (Live Camera)
+// ═══════════════════════════════════════
+let mirrorOn=false,mirrorStream=null;
+function toggleMirror(){
+  mirrorOn=!mirrorOn;
+  const el=document.getElementById('demoMirror');
+  if(mirrorOn){
+    navigator.mediaDevices.getUserMedia({video:true}).then(stream=>{
+      mirrorStream=stream;
+      el.innerHTML='<video autoplay muted playsinline></video>';
+      el.querySelector('video').srcObject=stream;
+    }).catch(()=>{mirrorOn=false;});
+  } else {
+    if(mirrorStream){mirrorStream.getTracks().forEach(t=>t.stop());mirrorStream=null;}
+    el.innerHTML='';
+  }
+}
+
+// ═══════════════════════════════════════
+//  ⏰ TIME-AWARE GREETING
+// ═══════════════════════════════════════
+function showTimeGreeting(callback){
+  const h=new Date().getHours();
+  const isRamadan=false; // Set true during Ramadan
+  const isFriday=new Date().getDay()===5;
+  let emoji,text,sub;
+  if(isFriday){
+    emoji='🕌';
+    text=LANG==='fr'?'Jumu\'a Mubarak':'Jumu\'a Mubarak';
+    sub=LANG==='fr'?'Bon vendredi et bonne presentation !':'Happy Friday and great presentation!';
+  } else if(h<12){
+    emoji='☀️';
+    text=LANG==='fr'?'Bonjour !':'Good Morning!';
+    sub=LANG==='fr'?'Pret pour decouvrir 97 apps ?':'Ready to discover 97 apps?';
+  } else if(h<18){
+    emoji='🌤️';
+    text=LANG==='fr'?'Bon apres-midi !':'Good Afternoon!';
+    sub=LANG==='fr'?'97 apps vous attendent !':'97 apps await you!';
+  } else {
+    emoji='🌙';
+    text=LANG==='fr'?'Bonsoir !':'Good Evening!';
+    sub=LANG==='fr'?'Installez-vous pour le spectacle !':'Sit back for the show!';
+  }
+  const stage=document.getElementById('demoStage');
+  stage.innerHTML=`<div class="demo-greeting"><div class="gr-emoji">${emoji}</div><div class="gr-text">${text}</div><div class="gr-sub">${sub}</div></div>`;
+  speakText(text+' '+sub);
+  setTimeout(callback,3000);
+}
+
+// ═══════════════════════════════════════
+//  ❓ HELP OVERLAY
+// ═══════════════════════════════════════
+function showHelp(){
+  const stage=document.getElementById('demoStage');
+  const keys=[
+    ['Space / →','Next slide'],['←','Previous slide'],['P','Pause / Play'],['F','Fullscreen'],
+    ['V','Voice on/off'],['S','Story mode'],['C','Constellation'],['M','Mirror mode'],['Esc','Exit demo'],['?','This help']
+  ];
+  stage.innerHTML=`<div style="position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;animation:fade-in .5s ease">
+    <div style="font-family:Fredoka,sans-serif;font-size:32px;color:white;font-weight:700">⌨️ ${LANG==='fr'?'Raccourcis':'Shortcuts'}</div>
+    <div style="display:grid;grid-template-columns:auto auto;gap:8px 24px">
+      ${keys.map(([k,d])=>`<div style="font-family:monospace;font-size:16px;color:#fbbf24;text-align:right;padding:4px 12px;background:rgba(255,255,255,.1);border-radius:6px">${k}</div><div style="font-family:Fredoka,sans-serif;font-size:16px;color:rgba(255,255,255,.7);padding:4px 0">${d}</div>`).join('')}
+    </div>
+    <div style="font-family:Fredoka,sans-serif;font-size:14px;color:rgba(255,255,255,.4);margin-top:16px">${LANG==='fr'?'Appuyez sur une touche pour continuer':'Press any key to continue'}</div>
+  </div>`;
+  clearTimeout(demoTimer);
+}
 </script>
 </body>
 </html>
