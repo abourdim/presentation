@@ -181,25 +181,31 @@ body.dark .demo-stage{background:linear-gradient(135deg,#0d1b0d 0%,#0a1a0a 30%,#
   animation:float-particles 20s ease-in-out infinite alternate}
 @keyframes float-particles{from{transform:translate(0,0)}to{transform:translate(-20px,15px)}}
 
-/* Single slide — two columns */
-.demo-slide{position:absolute;inset:0;display:flex;align-items:stretch;
-  animation:slide-enter .6s cubic-bezier(.16,1,.3,1) both}
-@keyframes slide-enter{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+/* FULL-SCREEN CINEMATIC SLIDE */
+.demo-slide{position:absolute;inset:0;animation:cinema-enter .8s cubic-bezier(.16,1,.3,1) both}
+@keyframes cinema-enter{from{opacity:0;transform:scale(1.02)}to{opacity:1;transform:scale(1)}}
 
-/* Left: screenshot */
-.demo-left{flex:0 0 55%;display:flex;align-items:center;justify-content:center;padding:24px;position:relative}
-.demo-screenshot-wrap{width:100%;height:100%;border-radius:24px;overflow:hidden;position:relative;
-  background:white;border:3px solid var(--border);
-  box-shadow:0 20px 60px rgba(0,0,0,.08),0 0 0 1px rgba(245,158,11,.05);
-  animation:glow-pulse 4s ease-in-out infinite alternate}
-@keyframes glow-pulse{
-  from{box-shadow:0 20px 60px rgba(0,0,0,.08),0 0 30px rgba(46,139,87,.05)}
-  to{box-shadow:0 20px 60px rgba(0,0,0,.12),0 0 40px rgba(245,158,11,.08)}}
-body.dark .demo-screenshot-wrap{background:var(--card);border-color:var(--border)}
-.demo-screenshot-wrap img{width:100%;height:100%;object-fit:contain;background:#111}
-.demo-emoji-fallback{display:flex;align-items:center;justify-content:center;width:100%;height:100%;
-  font-size:min(140px,15vw);animation:emoji-bob 3s ease-in-out infinite}
-@keyframes emoji-bob{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-12px) scale(1.08)}}
+/* Full-screen visual */
+.demo-visual{position:absolute;inset:0;overflow:hidden;background:#111}
+.demo-visual img{width:100%;height:100%;object-fit:contain;background:#0a0a0a}
+.demo-visual .demo-sim,.demo-visual .card-sim{position:absolute;inset:0;width:100%;height:100%;border-radius:0}
+.demo-visual .sim-terminal,.demo-visual .sim-chat,.demo-visual .sim-circuit,.demo-visual .sim-microbit,.demo-visual .sim-book{border-radius:0;height:100%}
+.demo-visual .mini-term,.demo-visual .mini-chat,.demo-visual .mini-mb,.demo-visual .mini-circuit,.demo-visual .mini-book{height:100%;border-radius:0}
+
+/* Glass overlay bar at bottom */
+.demo-glass{position:absolute;bottom:0;left:0;right:0;z-index:10;
+  background:linear-gradient(transparent,rgba(0,0,0,.7) 30%,rgba(0,0,0,.85));
+  padding:40px 48px 24px;display:flex;align-items:flex-end;gap:24px}
+.demo-glass-content{flex:1;min-width:0}
+.demo-glass-name{font-family:'Fredoka',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:700;color:white;
+  line-height:1.1;margin-bottom:4px;text-shadow:0 2px 20px rgba(0,0,0,.5)}
+.demo-glass-purpose{font-family:'Fredoka',sans-serif;font-size:clamp(16px,2.5vw,28px);font-weight:500;
+  color:#fbbf24;line-height:1.3;margin-bottom:12px;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+.demo-glass-tags{display:flex;gap:8px;flex-wrap:wrap}
+.demo-glass-tags .tag{font-size:12px;padding:5px 14px;border-radius:12px;background:rgba(255,255,255,.15);
+  color:white;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2)}
+.demo-glass-counter{font-family:'Fredoka',sans-serif;font-size:20px;font-weight:700;color:rgba(255,255,255,.6);
+  white-space:nowrap;align-self:flex-end;padding-bottom:4px}
 
 /* Fake visual simulations */
 .demo-sim{width:100%;height:100%;display:flex;flex-direction:column;font-family:'Courier New',monospace;overflow:hidden;position:relative}
@@ -259,42 +265,10 @@ body.dark .sim-book{background:linear-gradient(135deg,#1a1800,#1a1400)}
   font-family:'Fredoka',sans-serif;font-size:16px;font-weight:700;color:white;
   background:var(--rainbow);padding:6px 16px;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,.15)}
 
-/* Right: info panel */
-.demo-right{flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 40px 32px 24px;overflow-y:auto}
-.demo-app-name{font-family:'Fredoka',sans-serif;font-size:clamp(28px,4vw,48px);font-weight:700;line-height:1.1;margin-bottom:8px;
-  background:var(--rainbow);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.demo-purpose{font-family:'Fredoka',sans-serif;font-size:clamp(20px,2.5vw,32px);font-weight:600;color:var(--accent);line-height:1.3;
-  margin-bottom:20px;padding:12px 20px;background:var(--accent-soft);border-radius:16px;border-left:4px solid var(--accent)}
-body.dark .demo-purpose{background:rgba(46,139,87,.15);color:#66bb6a}
-.demo-app-desc{font-size:clamp(13px,1.5vw,17px);color:var(--text2);line-height:1.7;margin-bottom:20px}
-
-/* Info boxes */
-.demo-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
-.demo-info-box{background:rgba(255,255,255,.7);border:2px solid var(--border);border-radius:16px;padding:12px 16px;backdrop-filter:blur(8px)}
-body.dark .demo-info-box{background:rgba(20,32,20,.5);border-color:var(--border)}
-.demo-info-box-title{font-family:'Fredoka',sans-serif;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:4px}
-.demo-info-box-content{font-size:14px;font-weight:600;color:var(--text)}
-.demo-info-box-content .emoji{font-size:18px;margin-right:4px}
-
-/* Hint emojis row */
-.demo-hints-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.demo-hints-row span{font-size:32px;animation:hint-bounce 2s ease-in-out infinite;filter:drop-shadow(0 2px 6px rgba(0,0,0,.1))}
-.demo-hints-row span:nth-child(2){animation-delay:.15s}
-.demo-hints-row span:nth-child(3){animation-delay:.3s}
-.demo-hints-row span:nth-child(4){animation-delay:.45s}
-.demo-hints-row span:nth-child(5){animation-delay:.6s}
-.demo-hints-row span:nth-child(6){animation-delay:.75s}
-@keyframes hint-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-
-/* Tags row */
-.demo-tags{display:flex;gap:8px;flex-wrap:wrap}
-.demo-tags .tag{font-size:12px;padding:6px 16px;border-radius:14px}
-
 @media(max-width:900px){
-  .demo-slide{flex-direction:column}
-  .demo-left{flex:none;height:40%}
-  .demo-right{padding:16px 20px}
-  .demo-info-grid{grid-template-columns:1fr}
+  .demo-glass{padding:20px 24px 16px}
+  .demo-glass-name{font-size:clamp(24px,6vw,36px)}
+  .demo-glass-purpose{font-size:clamp(14px,3vw,20px)}
 }
 
 /* Progress */
@@ -1152,63 +1126,25 @@ function buildSimulation(a,purpose){
 
 function buildSlideHTML(a,idx){
   const purposeText=a.purpose?(a.purpose[LANG]||a.purpose.fr):'';
-  const descText=a.desc[LANG]||a.desc.fr;
-  const tagsHTML=a.cats.map(c=>`<span class="tag ${TAG_COLORS[c]||''}">${CATS[c]?CATS[c][LANG]:c}</span>`).join('');
-  const hintsArr=a.hints||[];
-  const hintsHTML=hintsArr.map(h=>`<span>${h}</span>`).join('');
+  const tagsHTML=a.cats.map(c=>`<span class="tag">${CATS[c]?CATS[c][LANG]:c}</span>`).join('');
 
-  // Screenshot or visual simulation
-  let leftContent='';
+  // Full-screen visual: screenshot or simulation
+  let visual='';
   if(a.thumb){
-    leftContent=`<img src="${BASE}${a.thumb}" alt="${a.name}" loading="lazy"/>`;
+    visual=`<img src="${BASE}${a.thumb}" alt="${a.name}" loading="lazy"/>`;
   } else {
-    leftContent=buildSimulation(a,purposeText);
+    visual=buildSimulation(a,purposeText);
   }
 
-  // Determine needs, difficulty, age from first category
-  const mainCat=a.cats[0]||'learning';
-  const needs=CAT_NEEDS[mainCat]||CAT_NEEDS.learning;
-  const needsText=needs[LANG]||needs.fr;
-  const diff=DIFFICULTY[mainCat]||'⭐';
-  const age=AGE_RANGE[mainCat]||'6+';
-  // Does it need special hardware?
-  const needsMicrobit=a.cats.includes('microbit');
-  const needsCamera=a.cats.includes('camera');
-  const needsHW=a.cats.includes('hardware')&&!needsMicrobit;
-  let needsIcons='🌐 ';
-  if(needsMicrobit) needsIcons+='📟 ';
-  if(needsCamera) needsIcons+='📸 ';
-  if(needsHW) needsIcons+='🔧 ';
-
   return `<div class="demo-slide">
-    <div class="demo-left">
-      <div class="demo-screenshot-wrap">${leftContent}</div>
-      <div class="demo-badge">#${idx+1} / ${APPS.length}</div>
-    </div>
-    <div class="demo-right">
-      <div class="demo-app-name">${a.emoji} ${a.name}</div>
-      <div class="demo-purpose">${purposeText}</div>
-      <div class="demo-hints-row">${hintsHTML}</div>
-      <div class="demo-app-desc">${descText}</div>
-      <div class="demo-info-grid">
-        <div class="demo-info-box">
-          <div class="demo-info-box-title">${LANG==='fr'?'Age':'Age'}</div>
-          <div class="demo-info-box-content"><span class="emoji">👦</span> ${age} ans</div>
-        </div>
-        <div class="demo-info-box">
-          <div class="demo-info-box-title">${LANG==='fr'?'Difficulte':LANG==='en'?'Difficulty':'صعوبة'}</div>
-          <div class="demo-info-box-content">${diff}</div>
-        </div>
-        <div class="demo-info-box">
-          <div class="demo-info-box-title">${LANG==='fr'?'Il te faut':LANG==='en'?'You need':'تحتاج'}</div>
-          <div class="demo-info-box-content">${needsIcons}</div>
-        </div>
-        <div class="demo-info-box">
-          <div class="demo-info-box-title">${LANG==='fr'?'Type':'Type'}</div>
-          <div class="demo-info-box-content">${a.cats.slice(0,2).map(c=>CATS[c]?CATS[c][LANG]:c).join(' + ')}</div>
-        </div>
+    <div class="demo-visual">${visual}</div>
+    <div class="demo-glass">
+      <div class="demo-glass-content">
+        <div class="demo-glass-name">${a.emoji} ${a.name}</div>
+        <div class="demo-glass-purpose">${purposeText}</div>
+        <div class="demo-glass-tags">${tagsHTML}</div>
       </div>
-      <div class="demo-tags">${tagsHTML}</div>
+      <div class="demo-glass-counter">#${idx+1}</div>
     </div>
   </div>`;
 }
