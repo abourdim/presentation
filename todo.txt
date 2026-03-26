@@ -1,12 +1,12 @@
 Workshop-DIY Presentation — TODO
 =================================
-Updated: 2026-03-26
+Updated: 2026-03-26 20:00
 
 ✅ DONE
 ------
 [x] Light kids-friendly theme (warm cream/green)
 [x] 97 apps with purpose taglines in FR/EN/AR
-[x] 57 app-specific visual simulations (chat, terminal, circuit, LED, gamepad, etc.)
+[x] 75 app-specific visual simulations (99% coverage — only 3d-lab uses fallback)
 [x] 23 real screenshots (cleaned 65 bad rawgit/welcome captures)
 [x] Demo mode — full-screen cinematic (Apple Keynote style)
 [x] Cinematic opening sequence (logo + counter 0→97 + tagline, 4.5s)
@@ -22,29 +22,22 @@ Updated: 2026-03-26
 [x] Category filter pills in demo mode
 [x] RTL fix for Arabic mode (counter, header, glass overlay)
 [x] Grid mini-simulations (unique per-app visuals in grid cards)
-[x] 38 automated QA tests (test.js)
+[x] 36+ automated QA tests (test.js)
 [x] Presenter controls: Space/arrows/Escape/F for fullscreen
+[x] 18 tool-specific sims (termlite, warsha, git-pulse, etc.)
+[x] rxy/bit-bot: rawgit blocks screenshots — using custom sims instead
 
 ⚠️ KNOWN ISSUES
 ----------------
-[ ] 19 apps use generic category fallback sims (mostly tools category)
-[ ] rxy screenshot shows "Welcome" tutorial — not the actual app
-[ ] bit-bot screenshot shows welcome screen — should show chat interface
 [ ] Some "Ouvrir" buttons appear on cards with no real screenshot
 [ ] Demo header can overlap app screenshots on small screens
+[ ] Duplicate LED patterns on micro:bit grid cards (same heart pattern)
 
 🔧 TODO — SHORT TERM
 ---------------------
-[ ] Re-capture bad screenshots: rxy, bit-bot (skip welcome/tutorial screens)
-[ ] Add specific sims for remaining 19 generic-fallback apps:
-    - 3d-lab, git-lab, save-our-planet, classroom
-    - termlite, warsha, web-kvm, sync-files
-    - callgraph, git-pulse, git-date-rewrite, dir-pulse
-    - bash-toolkit, sanitize-names-toolkit, meridian, mac-weird-keys
-    - posts, flyers, linkedin, fihris, tools, passassion-report
 [ ] Fix duplicate LED patterns on micro:bit cards in grid view
 [ ] End-to-end test: watch all 97 slides in demo, note any visual bugs
-[ ] Push remaining good thumbnails to GitHub Pages
+[ ] Push presentation commits to GitHub Pages
 
 💡 TODO — NICE TO HAVE
 -----------------------
@@ -59,6 +52,5 @@ Updated: 2026-03-26
 [ ] Mobile responsive for demo mode (currently optimized for big screens)
 [ ] Offline mode: embed thumbnails as base64 for no-internet presentations
 [ ] Add more Coup de Coeur apps based on audience feedback
-[ ] Animated background gradient (slow color shift instead of static)
 [ ] Confetti burst on Coup de Coeur apps
 [ ] Auto-detect screen size and adjust font sizes
