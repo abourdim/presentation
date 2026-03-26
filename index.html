@@ -1532,19 +1532,33 @@ document.addEventListener('keydown',e=>{
 //  🗣️ VOICE NARRATION (Web Speech API)
 // ═══════════════════════════════════════
 let voiceOn=false;
+let voicesLoaded=false;
+// Pre-load voices (Chrome loads them async)
+if('speechSynthesis' in window){
+  speechSynthesis.getVoices();
+  speechSynthesis.onvoiceschanged=()=>{voicesLoaded=true;};
+  setTimeout(()=>{speechSynthesis.getVoices();voicesLoaded=true;},500);
+}
 function toggleVoice(){
   voiceOn=!voiceOn;
   const btn=document.getElementById('demoVoiceBtn');
   btn.textContent=voiceOn?'🔊':'🔇';
   btn.classList.toggle('on',voiceOn);
   if(!voiceOn) speechSynthesis.cancel();
+  // Test voice immediately when enabling
+  if(voiceOn) speakText(LANG==='fr'?'Voix activee':'Voice enabled');
 }
 function speakText(text){
-  if(!voiceOn||!('speechSynthesis' in window))return;
+  if(!voiceOn||!('speechSynthesis' in window)||!text)return;
   speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(text);
-  u.lang=LANG==='ar'?'ar-SA':LANG==='en'?'en-US':'fr-FR';
+  const langMap={fr:'fr-FR',en:'en-US',ar:'ar-SA'};
+  u.lang=langMap[LANG]||'fr-FR';
   u.rate=0.9;u.pitch=1.1;
+  // Try to find a matching voice
+  const voices=speechSynthesis.getVoices();
+  const match=voices.find(v=>v.lang.startsWith(langMap[LANG]||'fr'));
+  if(match) u.voice=match;
   speechSynthesis.speak(u);
 }
 
