@@ -271,12 +271,16 @@ body.dark .sim-book{background:linear-gradient(135deg,#1a1800,#1a1400)}
 .demo-progress-bar{height:100%;background:var(--rainbow);background-size:200% 100%;animation:shimmer 3s linear infinite;
   border-radius:2px;transition:width .5s cubic-bezier(.16,1,.3,1);box-shadow:0 0 12px rgba(245,158,11,.5)}
 
-/* Category filter pills — floating overlay */
-.demo-cats{position:absolute;top:48px;left:50%;transform:translateX(-50%);display:flex;gap:5px;z-index:215;flex-wrap:wrap;justify-content:center;max-width:85%;padding:4px}
-.demo-cat-pill{background:rgba(0,0,0,.3);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);
-  font-family:'Fredoka',sans-serif;font-size:10px;font-weight:600;padding:3px 10px;border-radius:16px;cursor:pointer;transition:.25s;white-space:nowrap}
-.demo-cat-pill:hover{background:rgba(255,255,255,.2);color:white;transform:scale(1.05)}
-.demo-cat-pill.on{background:var(--accent);border-color:var(--accent);color:white;box-shadow:0 2px 12px rgba(245,158,11,.4)}
+/* Category filter pills — compact single row, auto-hide */
+.demo-cats{position:absolute;top:44px;left:50%;transform:translateX(-50%);display:flex;gap:4px;z-index:215;
+  justify-content:center;padding:3px 8px;border-radius:20px;
+  background:rgba(0,0,0,.5);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);
+  opacity:0;transition:opacity .3s}
+.demo-cats:hover,.demo-cats.show{opacity:1}
+.demo-cat-pill{background:transparent;border:none;color:rgba(255,255,255,.6);
+  font-family:'Fredoka',sans-serif;font-size:9px;font-weight:600;padding:2px 8px;border-radius:12px;cursor:pointer;transition:.2s;white-space:nowrap}
+.demo-cat-pill:hover{background:rgba(255,255,255,.15);color:white}
+.demo-cat-pill.on{background:var(--accent);color:white}
 
 /* Nav — floating in glass bar area */
 .demo-nav{position:absolute;bottom:20px;right:48px;display:flex;gap:10px;align-items:center;z-index:215}
@@ -930,7 +934,7 @@ function buildDemoCatPills(){
     if(count===0)return;
     const pill=document.createElement('button');
     pill.className='demo-cat-pill'+(c===demoFilter?' on':'');
-    pill.innerHTML=`${CAT_EMOJI[c]||''} ${CATS[c]?CATS[c][LANG]:c} <span style="opacity:.6;font-size:10px">${count}</span>`;
+    pill.innerHTML=`${CAT_EMOJI[c]||''} ${CATS[c]?CATS[c][LANG]:c}`;
     pill.onclick=()=>{
       demoFilter=c;
       document.querySelectorAll('.demo-cat-pill').forEach(p=>p.classList.toggle('on',false));
@@ -954,6 +958,10 @@ function toggleDemo(){
     buildDemoPlaylist();
     buildDemoCatPills();
     document.getElementById('demoPauseBtn').innerHTML='⏸ Pause';
+    // Show category pills briefly then fade
+    const catsEl=document.getElementById('demoCats');
+    catsEl.classList.add('show');
+    setTimeout(()=>catsEl.classList.remove('show'),4000);
     showDemoSlide(0);
     startDemoTimer();
   } else {
