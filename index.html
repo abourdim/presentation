@@ -171,8 +171,8 @@ body.demo-mode .demo-overlay{display:flex}
 @keyframes cinema-enter{from{opacity:0;transform:scale(1.02)}to{opacity:1;transform:scale(1)}}
 
 /* Full-screen visual */
-.demo-visual{position:absolute;inset:0;overflow:hidden;background:#111}
-.demo-visual img{width:100%;height:100%;object-fit:contain;background:#0a0a0a}
+.demo-visual{position:absolute;inset:0;overflow:hidden;background:#111;z-index:1}
+.demo-visual img{display:block;width:100%;height:100%;object-fit:contain;background:#0a0a0a}
 .demo-visual .demo-sim,.demo-visual .card-sim{position:absolute;inset:0;width:100%;height:100%;border-radius:0}
 .demo-visual .sim-terminal,.demo-visual .sim-chat,.demo-visual .sim-circuit,.demo-visual .sim-microbit,.demo-visual .sim-book{border-radius:0;height:100%}
 .demo-visual .mini-term,.demo-visual .mini-chat,.demo-visual .mini-mb,.demo-visual .mini-circuit,.demo-visual .mini-book{height:100%;border-radius:0}
@@ -452,7 +452,7 @@ const I18N={
   ar:{sub:'نبني ، نتعلم ، نشارك 🚀',search:'...بحث',noResult:'لا توجد تطبيقات',catLabel:'الفئات'}
 };
 let LANG='fr',activeFilter='all';
-const BASE=location.hostname==='localhost'||location.protocol==='file:'?'../apps/thumbs/':'https://abourdim.github.io/apps/thumbs/';
+const BASE=location.hostname==='localhost'||location.protocol==='file:'?'thumbs/':'https://abourdim.github.io/apps/thumbs/';
 const PAGES='https://abourdim.github.io/';
 const GH='https://github.com/abourdim/';
 
@@ -1113,7 +1113,7 @@ function buildSlideHTML(a,idx){
   // Full-screen visual: screenshot or simulation
   let visual='';
   if(a.thumb){
-    visual=`<img src="${BASE}${a.thumb}" alt="${a.name}" loading="lazy"/>`;
+    visual=`<img src="${BASE}${a.thumb}" alt="${a.name}"/>`;
   } else {
     visual=buildSimulation(a,purposeText);
   }
